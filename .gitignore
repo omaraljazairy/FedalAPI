@@ -133,3 +133,5 @@ logs/
 
 # env files
 .env
+.env_dev
+.env_test
