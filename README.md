@@ -1,14 +1,14 @@
 # Fedal API
 ##### Table of Contents
-[Description](#description)
-[Built with](#built-with)
-[Install](#install)
-[Usage](#usage)
-[Changelog](CHANGELOG.md)
-[Bugs](#bugs)
-[Contributing](#contributing)
-[Authors](#authors)
-[Licence Copyright](#licence)
+### [Description](#description)
+### [Built with](#built-with)
+### [Install](#install)
+### [Usage](#usage)
+### [Changelog](CHANGELOG.md)
+### [Bugs](#bugs)
+### [Contributing](#contributing)
+### [Authors](#authors)
+### [Licence Copyright](LICENCE)
 
 ## Description
 A Django Backend API used for my own projects. The API will used for front-end websites, mobile apps and command line applications. The API runs inside a docker container. For local testing, it uses a MySQL image connected to it. There is a PHPMyAdmin connected to the MySQL database.
@@ -59,7 +59,3 @@ The .env file will create the environment variables that will be used in the doc
 
 ## Authors
 Omar Aljazairy omar@fedal.nl
-
-## Licence Copyright
-The MIT licence is used here so any user can use and modify this project.
-

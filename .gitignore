@@ -132,4 +132,4 @@ dmypy.json
 logs/
 
 # env files
-.env*
+.env
