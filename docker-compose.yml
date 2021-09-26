@@ -1,0 +1,75 @@
+version: "3.7"
+
+services: 
+  web:
+    build: .
+    container_name: fedalapi-django
+    #command: bash -c "pip install -r fedalapi/requirements && python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8001"
+    #command: bash -c "pip install -r fedalapi/requirements.txt && python fedalapi/manage.py runserver 0.0.0.0:8001"
+    ## FOR PRODUCTION
+    # command: gunicorn fedalapi.wsgi:application --bind 0.0.0.0:8000 
+    # command: python manage.py collectstatic
+    ## FOR DEVELOPMENT
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/fedalapi
+      - staticfiles:/fedalapi/staticfiles/
+    # expose: # PRODUCTION + comment ports
+    #   - 8000
+    ports: # FOR DEVELOPMENT
+      - 8002:8000
+    env_file:
+      - ./.env
+    # command: tail -f /dev/null
+    networks:
+      - network-django
+    depends_on:
+      - mysql
+  # nginx: # FOR PRODUCTION
+  #   build: ./nginx
+  #   container_name: nginx_django
+  #   volumes:
+  #     - staticfiles:/fedalapi/static/
+  #   ports:
+  #     - 8001:80
+  #   depends_on:
+  #     - web
+  #   networks:
+  #     - network-django
+  mysql:
+    container_name: mysql-django
+    image: mysql:latest
+    ports:
+      - '3310:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD} # dockerpass
+    volumes:
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
+    networks:
+      network-django:
+        ipv4_address: ${DB_HOST}
+  phpmyadmin:
+    container_name: phpmyadmin-django
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    networks:
+      - network-django
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=${DB_USER}
+      - PMA_PASSWORD=${DB_PASSWORD} # dockerpass
+    ports:
+      - "8082:80"
+    depends_on:
+      - mysql
+volumes: 
+    mysql-data:
+    staticfiles:
+networks:
+    network-django:
+      ipam:
+        driver: default
+        config:
+          - subnet: 174.27.0.0/16
