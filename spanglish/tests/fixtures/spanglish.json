@@ -1,0 +1,121 @@
+[
+{
+    "model": "spanglish.category",
+    "pk": 1,
+    "fields": {
+        "created": "2020-03-15T13:29:37Z",
+        "name": "verb"
+    }
+},
+{
+    "model": "spanglish.category",
+    "pk": 2,
+    "fields": {
+        "created": "2020-03-16T17:33:51Z",
+        "name": "greeting"
+    }
+},
+{
+    "model": "spanglish.category",
+    "pk": 3,
+    "fields": {
+        "created": "2020-03-17T19:33:51Z",
+        "name": "days"
+    }
+},
+{
+    "model": "spanglish.language",
+    "pk": 1,
+    "fields": {
+        "name": "English",
+        "code": "en",
+        "created": "2020-03-15T13:35:51Z"
+    }
+},
+{
+    "model": "spanglish.language",
+    "pk": 2,
+    "fields": {
+        "name": "Spanish",
+        "code": "es",
+        "created": "2020-03-15T13:35:51Z"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 1,
+    "fields": {
+        "word": "Hablar",
+        "category": 1,
+        "language": 2,
+        "created": "2021-09-28 13:35:51"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 2,
+    "fields": {
+        "word": "Holla",
+        "category": 2,
+        "language": 2,
+        "created": "2021-09-28 13:35:51"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 3,
+    "fields": {
+        "word": "Lunes",
+        "category": 3,
+        "language": 2,
+        "created": "2021-09-28 13:35:51"
+    }
+},
+{
+    "model": "spanglish.verb",
+    "pk": 1,
+    "fields": {
+        "word": 1,
+        "yo": "hablo",
+        "tu": "hablas",
+        "usted": "habla",
+        "nosotros": "hablamos",
+        "vosotros": "hablais",
+        "ustedes": "hablan",
+        "tense": "present",
+        "created": "2020-09-28 18:09:05"
+    }
+},
+{
+    "model": "spanglish.sentence",
+    "pk": 1,
+    "fields": {
+        "sentence": "Como estas ?",
+        "category": 2,
+        "language": 2,
+        "created": "2021-09-28 13:35:51"
+    }
+},
+{
+    "model": "spanglish.translation",
+    "pk": 1,
+    "fields": {
+        "language": 1,
+        "word": 1,
+        "sentence": null,
+        "created": "2021-09-28 13:35:51",
+        "translation": "Speak"
+    }
+},
+{
+    "model": "spanglish.translation",
+    "pk": 2,
+    "fields": {
+        "language": 1,
+        "word": null,
+        "sentence": 1,
+        "created": "2021-09-28 13:35:51",
+        "translation": "How are you"
+    }
+}
+]

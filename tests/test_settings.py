@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
-from tests import test_env
+# from tests import test_env
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,12 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'django_nose',
     'spanglish',
-    'wipecardetailing',
-    'rest_framework_api_key'
 ]
 
 
@@ -281,7 +278,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--cover-erase',
     '--with-coverage',
-    '--cover-package=services,wipecardetailing,spanglish',
+    '--cover-package=spanglish',
     '--with-xunit',
     '--cover-html',
     '--cover-html-dir=tests/htmlcov',
