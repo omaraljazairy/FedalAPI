@@ -45,11 +45,11 @@ DROP TABLE IF EXISTS `Language`;
 CREATE TABLE IF NOT EXISTS `Language` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `iso-639-1` varchar(2) NOT NULL,
+  `code` varchar(2) NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `iso-639-1` (`iso-639-1`)
+  UNIQUE KEY `iso-639-1` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 

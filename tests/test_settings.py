@@ -125,7 +125,7 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
+print(os.environ.get('DB_DATABASE', 'Fedal'))
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('ENGINE', 'django.db.backends.mysql'),
@@ -307,4 +307,6 @@ FIXTURES = {
 # run test ../bin/python3.6 manage.py test --settings=tests.settings -s campaigns services/tests/
 # inspect_db ../bin/python manage.py inspectdb --database=spanglish > spanglish/models.py
 # wipecardetailing api-key: 7MMG9BDn.VArqTdzCNjtuRYORu0gm7V9TT9stvodj
+# test with coverage 1- coverage run manage.py test --settings=tests.test_settings -s spanglish
+#                    2- coverage report
 # ====================================================================

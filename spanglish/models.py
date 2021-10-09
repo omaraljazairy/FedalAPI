@@ -22,7 +22,7 @@ class Category(models.Model):
 
 class Language(models.Model):
     name = models.CharField(unique=True, max_length=20)
-    code = models.CharField(db_column='code', unique=True, max_length=2)  # Field renamed to remove unsuitable characters.
+    code = models.CharField(db_column='code', unique=True, null=True, max_length=2)  # Field renamed to remove unsuitable characters.
     created = models.DateTimeField(auto_now=True)
 
     class Meta:

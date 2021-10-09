@@ -55,7 +55,7 @@
     "model": "spanglish.word",
     "pk": 2,
     "fields": {
-        "word": "Holla",
+        "word": "Hola",
         "category": 2,
         "language": 2,
         "created": "2021-09-28 13:35:51"
@@ -67,6 +67,16 @@
     "fields": {
         "word": "Lunes",
         "category": 3,
+        "language": 2,
+        "created": "2021-09-28 13:35:51"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 4,
+    "fields": {
+        "word": "Ir",
+        "category": 1,
         "language": 2,
         "created": "2021-09-28 13:35:51"
     }
@@ -91,6 +101,16 @@
     "pk": 1,
     "fields": {
         "sentence": "Como estas ?",
+        "category": 2,
+        "language": 2,
+        "created": "2021-09-28 13:35:51"
+    }
+},
+{
+    "model": "spanglish.sentence",
+    "pk": 2,
+    "fields": {
+        "sentence": "A donde estas ?",
         "category": 2,
         "language": 2,
         "created": "2021-09-28 13:35:51"

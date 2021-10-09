@@ -1,0 +1,23 @@
+[coverage:run]
+source = .
+omit = 
+    tests/*
+    fedalapi/*
+    manage.py
+    **__init__.py
+    **migrations/**
+    spanglish/tests/**
+    **dbrouter.py
+
+[pytest]
+DJANGO_SETTINGS_MODULE = tests.test_settings
+filterwarnings =
+    ignore::UserWarning
+    ignore:DeprecationWarning
+    ignore:.*U.*mode is deprecated:DeprecationWarning
+addopts = -p no:warnings
+env_override_existing_values = 1
+env_files =
+    .env
+    .test.env
+    .dev.env

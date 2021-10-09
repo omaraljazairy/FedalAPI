@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20, unique=True)),
-                ('code', models.CharField(db_column='code', max_length=2, unique=True)),
+                ('code', models.CharField(db_column='code', max_length=2, unique=True, null=True)),
                 ('created', models.DateTimeField(auto_now=True)),
             ],
             options={
