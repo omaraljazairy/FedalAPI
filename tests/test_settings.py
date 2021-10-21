@@ -62,8 +62,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'standard': {
-            'format': "[%(asctime)s] %(levelname)s [%(process)d:%(name)s]\
-             [%(funcName)s] %(message)s",
+            'format': "[%(asctime)s] %(levelname)s [%(process)d:%(name)s] - [%(funcName)s] %(message)s",
             'datefmt': "%d/%b/%Y %H:%M:%S"
         },
     },
@@ -86,21 +85,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'wipecardetailing': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'email': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
     },
 }
 
 
-ROOT_URLCONF = 'api.urls'
+ROOT_URLCONF = 'fedalapi.urls'
 
 
 TEMPLATES = [
@@ -120,7 +109,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'api.wsgi.application'
+WSGI_APPLICATION = 'fedalapi.wsgi.application'
 
 
 # Database
@@ -225,9 +214,9 @@ STATIC_ROOT = 'static'
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S%z',
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        # 'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -239,7 +228,6 @@ REST_FRAMEWORK = {
         'anon': '10000/day',
         'user': '10000/day',
         'spanglish': '10000/min',
-        'wipecardetailing': '10000/min',
     }
 }
 

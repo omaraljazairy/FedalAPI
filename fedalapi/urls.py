@@ -1,7 +1,7 @@
-"""fedalapi URL Configuration
+"""api URL Configuration.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
+    https://docs.djangoproject.com/en/2.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,7 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+from django.conf.urls import include, url
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenVerifyView
+
+from . import views
+router = routers.DefaultRouter()
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
+    path('spanglish/', include('spanglish.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/token/', TokenObtainPairView.as_view()),
+    path('api/token/refresh/', TokenRefreshView.as_view()),
+    path('api/token/verify/', TokenVerifyView.as_view()),
+    # url(r'^$', views.schema_view, name="docs")
 ]

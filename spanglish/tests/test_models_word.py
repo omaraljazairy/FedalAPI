@@ -30,7 +30,7 @@ class WordModelTestClass(TestCase):
         """get the 1st word and expect it to be Hablar"""
 
         word = Word.objects.get(pk=1)
-        logger.debug("get word: %s" % Word.word)
+        logger.debug("get word: %s" % word)
 
         self.assertEquals(word.word, 'Hablar')
 
