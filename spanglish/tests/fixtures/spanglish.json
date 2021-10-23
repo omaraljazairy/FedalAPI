@@ -97,6 +97,21 @@
     }
 },
 {
+    "model": "spanglish.verb",
+    "pk": 2,
+    "fields": {
+        "word": 4,
+        "yo": "voy",
+        "tu": "vas",
+        "usted": "va",
+        "nosotros": "vamos",
+        "vosotros": "vais",
+        "ustedes": "van",
+        "tense": "present",
+        "created": "2020-09-28 18:09:05"
+    }
+},
+{
     "model": "spanglish.sentence",
     "pk": 1,
     "fields": {

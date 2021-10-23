@@ -13,12 +13,14 @@ router.register(r'language/?', views.LanguageViews)
 # router.register(r'word', views.WordCreateUpdateView)
 
 urlpatterns = [
-    # url(r'^category/(?P<name>[a-z]{2})/$',
-    #     views.CategoryViews.as_view(), name=views.CategoryViews.name),
-    # url(r'^words/language/(?P<iso1>[a-z]{2})/$',
-    #     views.WordListView.as_view(), name=views.WordListView.name),
     path('words/', views.WordCreateListView.as_view(), name='word-create-list'),
     path('word/<int:pk>/', views.WordUpdateDeleteDetails.as_view(), name='word-details'),
+    path('verbs/', views.VerbCreateListView.as_view(), name='verb-create-list'),
+    path('verb/<int:pk>/', views.VerbUpdateDeleteDetails.as_view(), name='verb-details'),
+    path('sentences/', views.SentenceCreateListView.as_view(), name='sentence-create-list'),
+    path('sentence/<int:pk>/', views.SentenceUpdateDeleteDetails.as_view(), name='sentence-details'),
+    path('translations/', views.TranslationCreateListView.as_view(), name='tranlation-create-list'),
+    path('translation/<int:pk>/', views.TranslationUpdateDeleteDetails.as_view(), name='translation-details'),    
     path('', include(router.urls)),
     # url(r'^$', views.ApiRoot.as_view(), name=views.ApiRoot.name),
 ]

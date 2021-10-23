@@ -1,6 +1,8 @@
 import logging
 from rest_framework import serializers
-from .models import Category, Language, Word, Sentence, Translation
+from rest_framework import validators
+from rest_framework.validators import UniqueTogetherValidator
+from .models import Category, Language, Word, Sentence, Translation, Verb
 
 logger = logging.getLogger('spanglish')
 
@@ -44,6 +46,15 @@ class SentenceSerializer(serializers.ModelSerializer):
         model = Sentence
         fields = '__all__'
 
+
+class VerbSerializer(serializers.ModelSerializer):
+    """Serialize the Verb model object."""
+
+    class Meta:
+        """specify which fields should be serialized. in this case, all. """
+
+        model = Verb
+        fields = '__all__'
 
 class TranslationSerializer(serializers.ModelSerializer):
     """Serialize the Translation model object."""

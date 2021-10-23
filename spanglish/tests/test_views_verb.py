@@ -4,14 +4,14 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User, Permission, Group
-from spanglish.models import Word
+from spanglish.models import Verb
 import logging
 
 logger = logging.getLogger('spanglish')
 
 
-class WordViewTestClass(TestCase):
-    """Wordlist view tests."""
+class VerbViewTestClass(TestCase):
+    """Verblist view tests."""
 
     @classmethod
     def setUpClass(cls):
@@ -19,25 +19,25 @@ class WordViewTestClass(TestCase):
         initalize the client and apiclient.
         """
         logger.debug("%s started " % cls.__name__)
-        cls.api_url = 'http://127.0.0.1:8002/spanglish/word/'
-        cls.api_url2 = 'http://127.0.0.1:8002/spanglish/words/'
+        cls.api_url = 'http://127.0.0.1:8002/spanglish/verb/'
+        cls.api_url2 = 'http://127.0.0.1:8002/spanglish/verbs/'
 
         # create permissions
         # first get the contenttype of the model
-        content_type = ContentType.objects.get_for_model(Word)
+        content_type = ContentType.objects.get_for_model(Verb)
         add_permission, created = Permission.objects.get_or_create(
-            codename='add_word',
-            name='Can add word',
+            codename='add_verb',
+            name='Can add verb',
             content_type=content_type
         )
         change_permission, created = Permission.objects.get_or_create(
-            codename='change_word',
-            name='Can change word',
+            codename='change_verb',
+            name='Can change verb',
             content_type=content_type
         )
         delete_permission, created = Permission.objects.get_or_create(
-            codename='delete_word',
-            name='Can delete word',
+            codename='delete_verb',
+            name='Can delete verb',
             content_type=content_type
         )
 
@@ -98,7 +98,7 @@ class WordViewTestClass(TestCase):
         cls.api_client.credentials(HTTP_AUTHORIZATION='Bearer ' + token)
 
 
-    def test_view_get_all_words_200(self):
+    def test_view_get_all_verbs_200(self):
         """test the get request to the api, expects 200 response with
         content."""
 
@@ -115,7 +115,7 @@ class WordViewTestClass(TestCase):
         self.assertTrue(content)
 
 
-    def test_view_get_word_error_with_unknow_param_404(self):
+    def test_view_get_verb_error_with_unknow_param_404(self):
         """test the get request to the api with an unknown param,
         expects 404 response with content."""
 
@@ -129,8 +129,8 @@ class WordViewTestClass(TestCase):
         self.assertEquals(status_code, 404)
 
 
-    def test_view_get_word_with_content(self):
-        """test the get request to the api to get word id 1.
+    def test_view_get_verb_with_content(self):
+        """test the get request to the api to get verb id 1.
         expects 200 response with content json value to match
         the name Verb."""
 
@@ -143,24 +143,34 @@ class WordViewTestClass(TestCase):
         logger.debug("response content: %s" % content)
 
         expected_content = {
-            'id': 1, 
-            'word': 'Hablar', 
-            'language': 2, 
-            'category': 1, 
-            'created': '2021-09-28 13:35:51+0200'
+            "id": 1,
+            "word": 1,
+            "yo": "hablo",
+            "tu": "hablas",
+            "usted": "habla",
+            "nosotros": "hablamos",
+            "vosotros": "hablais",
+            "ustedes": "hablan",
+            "tense": "present",
+            "created": "2020-09-28 18:09:05+0200"
         }
 
         self.assertEquals(status_code, 200)
         self.assertDictEqual(d1=content, d2=expected_content)
 
 
-    def test_view_create_word_201(self):
-        """post request to create a new word, expect to get back statuscode 201"""
+    def test_view_create_verb_201(self):
+        """post request to create a new verb, expect to get back statuscode 201"""
 
         data = {
-            'word': 'ver', 
-            'language': 2, 
-            'category': 1
+            "word": 2,
+            "yo": "voy",
+            "tu": "vas",
+            "usted": "va",
+            "nosotros": "vamos",
+            "vosotros": "vais",
+            "ustedes": "van",
+            "tense": "present",
         }
         response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
@@ -172,66 +182,35 @@ class WordViewTestClass(TestCase):
         self.assertEquals(201, status_code)
 
 
-    def test_view_create_word_with_no_language_400(self):
-        """post an existing word without a language, expect an integrityerror"""
+    def test_view_create_existing_verb_400(self):
+        """post an existing verb"""
 
         data = {
-            'word': 'foo', 
-            'category': 1
+            "word": 1,
+            "yo": "hablo",
+            "tu": "hablas",
+            "usted": "habla",
+            "nosotros": "hablamos",
+            "vosotros": "hablais",
+            "ustedes": "hablan",
+            "tense": "present",
         }
         response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
-        content = response.json()
+        content = response.content
 
         logger.debug("response: %s" % response)
         logger.debug("content: %s" % content)
 
         self.assertEquals(400, status_code)
-        self.assertEquals({'language': ['This field is required.']}, content)
+        # self.assertEquals({'verb': ['verb with this verb already exists.']}, content)
 
 
-    def test_view_create_word_with_no_category_400(self):
-        """post an existing word without a category, expect an integrityerror"""
+    def test_view_put_verb_200(self):
+        """update a verb by calling the patch action. expects response 200"""
 
-        data = {
-            'word': 'foo', 
-            'language': 1
-        }
-        response = self.api_client.post(self.api_url2, data=data)
-        status_code = response.status_code
-        content = response.json()
-
-        logger.debug("response: %s" % response)
-        logger.debug("content: %s" % content)
-
-        self.assertEquals(400, status_code)
-        self.assertEquals({'category': ['This field is required.']}, content)
-
-
-    def test_view_create_existing_word_400(self):
-        """post an existing word"""
-
-        data = {
-            'word': 'ir', 
-            'language': 2, 
-            'category': 1
-        }
-        response = self.api_client.post(self.api_url2, data=data)
-        status_code = response.status_code
-        content = response.json()
-
-        logger.debug("response: %s" % response)
-        logger.debug("content: %s" % content)
-
-        self.assertEquals(400, status_code)
-        self.assertEquals({'word': ['word with this word already exists.']}, content)
-
-
-    def test_view_put_word_200(self):
-        """update a word by calling the patch action. expects response 200"""
-
-        uri = f'{self.api_url}2/'
-        data = {'language': 2}
+        uri = f'{self.api_url}1/'
+        data = {'tense': 'simple past'}
         response = self.api_client.patch(uri, data=data)
         status_code = response.status_code
         content = response.content
@@ -242,10 +221,10 @@ class WordViewTestClass(TestCase):
         self.assertEquals(200, status_code)
 
 
-    def test_view_delete_word_204(self):
-        """delete a word and expect 204"""
+    def test_view_delete_verb_204(self):
+        """delete a verb and expect 204"""
 
-        uri = f'{self.api_url}3/'
+        uri = f'{self.api_url}2/'
         response = self.api_client.delete(uri, data={})
         status_code = response.status_code
 
