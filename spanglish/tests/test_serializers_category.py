@@ -31,7 +31,7 @@ class CategorySerializerTestClass(TestCase):
         category_data = category_serialized.data
         
         category_keys = list(category_data.keys())
-        expected_fields = ['id', 'url', 'name', 'created']
+        expected_fields = ['id', 'name', 'created']
 
         logger.debug("category_keys: %s", category_keys)
 

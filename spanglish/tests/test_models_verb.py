@@ -1,7 +1,7 @@
 """Simple Unitesting for the verb model."""
 
 from django.test import TestCase
-from spanglish.models import Verb
+from spanglish.models import Verb, Word
 import logging
 
 logger = logging.getLogger('spanglish')
@@ -13,7 +13,9 @@ class VerbModelTestClass(TestCase):
     @classmethod
     def setUpClass(cls):
         """Run at the start of the test of this class."""
+
         logger.debug("setUpClass started")
+        cls.word = Word.objects.get(pk=3)
 
 
     def test_create_verb_object_success(self):
@@ -21,7 +23,7 @@ class VerbModelTestClass(TestCase):
 
         verb = Verb.objects.create(
             tense='present', 
-            word='4', 
+            word=self.word, 
             yo='voy', 
             tu='vas', 
             usted='va', 

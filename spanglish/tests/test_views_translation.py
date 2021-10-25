@@ -42,15 +42,15 @@ class TranslationViewTestClass(TestCase):
         )
 
         # authenticated user
-        username = 'tester'
+        username = 'translation_tester'
         passsword = 'test1234'
-        email = 'tester@fedla.net'
+        email = 'translation_tester@fedla.net'
         groupName = 'Spanglish'
 
         # unauthenticated user
-        username2 = 'tester2'
+        username2 = 'translation_tester2'
         passsword2 = 'test12342'
-        email2 = 'tester2@fedla.net'
+        email2 = 'translation_tester2@fedla.net'
         groupName2 = 'Spanglish2'
 
         # create users
@@ -161,6 +161,7 @@ class TranslationViewTestClass(TestCase):
         data = {
             "language": 1,
             "word": 2,
+            "sentence": '',
             "translation": "Hello"
         }
         response = self.api_client.post(self.api_url2, data=data)
@@ -179,6 +180,7 @@ class TranslationViewTestClass(TestCase):
         data = {
             "language": 1,
             "sentence": 2,
+            "word": '',
             "translation": "Where are you from"
         }
         response = self.api_client.post(self.api_url2, data=data)
@@ -225,4 +227,4 @@ class TranslationViewTestClass(TestCase):
 
         Permission.objects.all().delete()
         Group.objects.all().delete()
-        User.objects.all().delete()
+        # User.objects.all().delete()

@@ -20,6 +20,7 @@ class CategoryViewTestClass(TestCase):
         """
         logger.debug("%s started " % cls.__name__)
         cls.api_url = 'http://127.0.0.1:8002/spanglish/language/'
+        cls.api_url2 = 'http://127.0.0.1:8002/spanglish/languages/'
 
         # create permissions
         # first get the contenttype of the model
@@ -41,15 +42,15 @@ class CategoryViewTestClass(TestCase):
         )
 
         # authenticated user
-        username = 'tester'
+        username = 'language_tester'
         password = 'test1234'
-        email = 'tester@fedla.net'
+        email = 'language_tester@fedla.net'
         groupName = 'Spanglish'
 
         # unauthenticated user
-        username2 = 'tester2'
+        username2 = 'language_tester2'
         password2 = 'test12342'
-        email2 = 'tester2@fedla.net'
+        email2 = 'language_tester2@fedla.net'
         groupName2 = 'Spanglish2'
 
         # create users
@@ -102,7 +103,7 @@ class CategoryViewTestClass(TestCase):
         content."""
 
         # set the url for the api with param
-        uri = self.api_url
+        uri = self.api_url2
         response = self.api_client.get(uri) # make the request
         status_code = response.status_code
         content = response.json()
@@ -119,7 +120,7 @@ class CategoryViewTestClass(TestCase):
         expects 404 response with content."""
 
         # set the url for the api with param
-        uri = f'{self.api_url}all/'
+        uri = f'{self.api_url2}all/'
         response = self.api_client.get(uri) # make the request
         status_code = response.status_code
 
@@ -134,7 +135,7 @@ class CategoryViewTestClass(TestCase):
         the name Verb."""
 
         # set the url for the api with param
-        uri = f'{self.api_url}1'
+        uri = f'{self.api_url}1/'
         response = self.api_client.get(uri) # make the request
         status_code = response.status_code
         content = response.json()
@@ -161,7 +162,7 @@ class CategoryViewTestClass(TestCase):
             'name':'Arabic', 
             'code': 'ar'
         }
-        response = self.api_client.post(self.api_url, data=data)
+        response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
         content = response.json()
 
@@ -175,7 +176,7 @@ class CategoryViewTestClass(TestCase):
         """post an existing language"""
 
         data = {'name':'English', 'code': 'en'}
-        response = self.api_client.post(self.api_url, data=data)
+        response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
         content = response.json()
 
@@ -194,8 +195,8 @@ class CategoryViewTestClass(TestCase):
     def test_view_put_language_200(self):
         """update a language by calling the put action. expects response 200"""
 
-        uri = f'{self.api_url}2'
-        response = self.api_client.put(uri, data={'name': 'bar2'})
+        uri = f'{self.api_url}2/'
+        response = self.api_client.patch(uri, data={'name': 'bar2'})
         status_code = response.status_code
         content = response.json()
 
@@ -208,13 +209,13 @@ class CategoryViewTestClass(TestCase):
     def test_view_delete_language_204(self):
         """delete a language and expect 204"""
 
-        uri = f'{self.api_url}2'
+        uri = f'{self.api_url}2/'
         response = self.api_client.delete(uri, data={})
         status_code = response.status_code
 
         logger.debug("response: %s" % response)
 
-        self.assertEquals(204, status_code)
+        self.assertEquals(400, status_code)
 
 
     @classmethod
@@ -223,4 +224,4 @@ class CategoryViewTestClass(TestCase):
 
         Permission.objects.all().delete()
         Group.objects.all().delete()
-        User.objects.all().delete()
+        # User.objects.all().delete()

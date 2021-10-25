@@ -2,3 +2,4 @@
 ## v0.0.2 - Oct. 09 2021 - testings models spanglish
 ## v0.0.3 - Oct. 10 2021 - creating & testings serializers spanglish
 ## v0.0.4 - Oct. 21 2021 - testing views
+## v0.0.5 - Oct. 24 2021 - database changes

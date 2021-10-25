@@ -1,7 +1,8 @@
 """Simple Unitesting for the sentence model."""
 
 from django.test import TestCase
-from spanglish.models import Sentence
+from spanglish.models import Sentence, Language, Category
+from django.contrib.auth.models import User
 import logging
 
 logger = logging.getLogger('spanglish')
@@ -14,12 +15,21 @@ class SentenceModelTestClass(TestCase):
     def setUpClass(cls):
         """Run at the start of the test of this class."""
         logger.debug("setUpClass started")
+        cls.category = Category.objects.get(pk=3)
+        cls.language = Language.objects.get(pk=2)
+        cls.user = User.objects.get(pk=1)
+
 
 
     def test_create_sentence_object_success(self):
         """create a new sentence by providing the sentence, language and category"""
 
-        sentence = Sentence.objects.create(sentence='Donde estas ?', language='2', category=2)
+        sentence = Sentence.objects.create(
+            sentence='Donde estas ?', 
+            language=self.language,
+            category=self.category,
+            user=self.user
+        )
         sentence.save()
         logger.debug("sentence created %s" % sentence)
 
@@ -57,12 +67,12 @@ class SentenceModelTestClass(TestCase):
         """ update the category_id of the sentence to 1. expect no error. """
 
         sentence = Sentence.objects.get(pk=1)
-        sentence.category = 1
+        sentence.category = self.category
         sentence.save()
 
         logger.debug("new category for the sentence %s is updated to %s", sentence.sentence, sentence.category)
 
-        self.assertEqual(1, sentence.category)
+        self.assertEqual('days', sentence.category.name)
 
 
     @classmethod

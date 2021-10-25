@@ -42,15 +42,15 @@ class SentenceViewTestClass(TestCase):
         )
 
         # authenticated user
-        username = 'tester'
+        username = 'sentence_tester'
         passsword = 'test1234'
-        email = 'tester@fedla.net'
+        email = 'sentence_tester@fedla.net'
         groupName = 'Spanglish'
 
         # unauthenticated user
-        username2 = 'tester2'
+        username2 = 'sentence_tester2'
         passsword2 = 'test12342'
-        email2 = 'tester2@fedla.net'
+        email2 = 'sentence_tester2@fedla.net'
         groupName2 = 'Spanglish2'
 
         # create users
@@ -144,6 +144,7 @@ class SentenceViewTestClass(TestCase):
 
         expected_content = {
             'id': 1, 
+            'user': 1,
             'sentence': 'Como estas ?', 
             'language': 2, 
             'category': 2, 
@@ -160,7 +161,8 @@ class SentenceViewTestClass(TestCase):
         data = {
             'sentence': 'porque amigo porque', 
             'language': 2, 
-            'category': 1
+            'category': 1,
+            'user': 1
         }
         response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
@@ -178,7 +180,8 @@ class SentenceViewTestClass(TestCase):
         data = {
             'sentence': 'A donde estas ?', 
             'language': 2, 
-            'category': 1
+            'category': 1,
+            'user': 1
         }
         response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
@@ -224,4 +227,4 @@ class SentenceViewTestClass(TestCase):
 
         Permission.objects.all().delete()
         Group.objects.all().delete()
-        User.objects.all().delete()
+        # User.objects.all().delete()

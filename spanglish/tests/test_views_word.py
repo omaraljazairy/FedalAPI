@@ -42,15 +42,15 @@ class WordViewTestClass(TestCase):
         )
 
         # authenticated user
-        username = 'tester'
+        username = 'word_tester'
         password = 'test1234'
-        email = 'tester@fedla.net'
+        email = 'word_tester@fedla.net'
         groupName = 'Spanglish'
 
         # unauthenticated user
-        username2 = 'tester2'
+        username2 = 'word_tester2'
         password2 = 'test12342'
-        email2 = 'tester2@fedla.net'
+        email2 = 'word_tester2@fedla.net'
         groupName2 = 'Spanglish2'
 
         # create users
@@ -143,7 +143,8 @@ class WordViewTestClass(TestCase):
         logger.debug("response content: %s" % content)
 
         expected_content = {
-            'id': 1, 
+            'id': 1,
+            'user': 1, 
             'word': 'Hablar', 
             'language': 2, 
             'category': 1, 
@@ -159,6 +160,7 @@ class WordViewTestClass(TestCase):
 
         data = {
             'word': 'ver', 
+            'user': 1,
             'language': 2, 
             'category': 1
         }
@@ -177,6 +179,7 @@ class WordViewTestClass(TestCase):
 
         data = {
             'word': 'foo', 
+            'user': 1,
             'category': 1
         }
         response = self.api_client.post(self.api_url2, data=data)
@@ -187,7 +190,10 @@ class WordViewTestClass(TestCase):
         logger.debug("content: %s" % content)
 
         self.assertEquals(400, status_code)
-        self.assertEquals({'language': ['This field is required.']}, content)
+        self.assertEquals(
+            {
+                'language': ['This field is required.']
+            }, content)
 
 
     def test_view_create_word_with_no_category_400(self):
@@ -201,11 +207,20 @@ class WordViewTestClass(TestCase):
         status_code = response.status_code
         content = response.json()
 
+        expected_response = {
+            'category': [
+                'This field is required.'
+            ],
+            'user': [
+                'This field is required.'
+            ]
+        }
+
         logger.debug("response: %s" % response)
         logger.debug("content: %s" % content)
 
         self.assertEquals(400, status_code)
-        self.assertEquals({'category': ['This field is required.']}, content)
+        self.assertEquals(expected_response, content)
 
 
     def test_view_create_existing_word_400(self):
@@ -213,6 +228,7 @@ class WordViewTestClass(TestCase):
 
         data = {
             'word': 'ir', 
+            'user': 1,
             'language': 2, 
             'category': 1
         }
@@ -260,4 +276,4 @@ class WordViewTestClass(TestCase):
 
         Permission.objects.all().delete()
         Group.objects.all().delete()
-        User.objects.all().delete()
+        # User.objects.all().delete()

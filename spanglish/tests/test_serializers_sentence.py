@@ -29,7 +29,7 @@ class SentenceSerializerTestClass(TestCase):
         sentence_data = sentence_serialized.data
         
         sentence_keys = list(sentence_data.keys())
-        expected_fields = ['id', 'sentence', 'language', 'category', 'created']
+        expected_fields = ['id', 'sentence', 'language', 'category', 'created', 'user']
 
         logger.debug("sentence_keys: %s", sentence_keys)
 

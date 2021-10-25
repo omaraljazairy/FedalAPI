@@ -42,15 +42,15 @@ class VerbViewTestClass(TestCase):
         )
 
         # authenticated user
-        username = 'tester'
+        username = 'verb_tester'
         password = 'test1234'
-        email = 'tester@fedla.net'
+        email = 'verb_tester@fedla.net'
         groupName = 'Spanglish'
 
         # unauthenticated user
-        username2 = 'tester2'
+        username2 = 'verb_tester2'
         password2 = 'test12342'
-        email2 = 'tester2@fedla.net'
+        email2 = 'verb_tester2@fedla.net'
         groupName2 = 'Spanglish2'
 
         # create users
@@ -239,4 +239,4 @@ class VerbViewTestClass(TestCase):
 
         Permission.objects.all().delete()
         Group.objects.all().delete()
-        User.objects.all().delete()
+        # User.objects.all().delete()

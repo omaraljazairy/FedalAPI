@@ -1,7 +1,7 @@
 """Simple Unitesting for the translation model."""
 
 from django.test import TestCase
-from spanglish.models import Translation
+from spanglish.models import Translation, Word, Sentence, Language
 import logging
 
 logger = logging.getLogger('spanglish')
@@ -13,13 +13,21 @@ class TranslationModelTestClass(TestCase):
     @classmethod
     def setUpClass(cls):
         """Run at the start of the test of this class."""
+        
         logger.debug("setUpClass started")
+        cls.language = Language.objects.get(pk=1)
+        cls.word = Word.objects.get(pk=2)
+        cls.sentence = Sentence.objects.get(pk=2)
 
 
     def test_create_translation_object_word_success(self):
         """create a new translation by providing the translation, language and word."""
 
-        translation = Translation.objects.create(translation='Hello', language='1', word=2)
+        translation = Translation.objects.create(
+            translation='Hello', 
+            language=self.language, 
+            word=self.word
+        )
         translation.save()
         logger.debug("translation created %s" % translation)
 
@@ -29,7 +37,11 @@ class TranslationModelTestClass(TestCase):
     def test_create_translation_object_sentence_success(self):
         """create a new translation by providing the translation, language and sentence."""
 
-        translation = Translation.objects.create(translation='Where are you from ?', language='1', sentence=2)
+        translation = Translation.objects.create(
+            translation='Where are you from ?', 
+            language=self.language, 
+            sentence=self.sentence
+        )
         translation.save()
         logger.debug("translation created %s" % translation)
 
@@ -49,7 +61,7 @@ class TranslationModelTestClass(TestCase):
         """try to create a translation object with no language. should throw an exception"""
 
         with self.assertRaises(expected_exception=Exception) as e:
-            Translation.object.create(word=2, translation='bar').save()
+            Translation.object.create(word=self.word, translation='bar').save()
 
         logger.debug("expection thrown")
 

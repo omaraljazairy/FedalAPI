@@ -1,0 +1,257 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$HKUzZMAEVgXUSxqq8hamki$1lybOnWAYNrHUI/XsKYj/VijDP0JnkKxXj/LkAi3stc=",
+        "last_login": "2021-10-10T19:27:31.891Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "omar@fedal.nl",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-09-21T19:37:37.466Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "spanglish.category",
+    "pk": 1,
+    "fields": {
+        "name": "numbers",
+        "created": "2021-10-10T15:51:45Z"
+    }
+},
+{
+    "model": "spanglish.category",
+    "pk": 2,
+    "fields": {
+        "name": "verb",
+        "created": "2021-10-10T19:38:46Z"
+    }
+},
+{
+    "model": "spanglish.category",
+    "pk": 3,
+    "fields": {
+        "name": "day",
+        "created": "2021-10-21T17:41:17Z"
+    }
+},
+{
+    "model": "spanglish.category",
+    "pk": 4,
+    "fields": {
+        "name": "greeting",
+        "created": "2021-10-24T14:56:38Z"
+    }
+},
+{
+    "model": "spanglish.language",
+    "pk": 1,
+    "fields": {
+        "name": "French",
+        "code": "fr",
+        "created": "2021-10-10T15:51:45Z"
+    }
+},
+{
+    "model": "spanglish.language",
+    "pk": 2,
+    "fields": {
+        "name": "English",
+        "code": "en",
+        "created": "2021-10-13T18:47:05Z"
+    }
+},
+{
+    "model": "spanglish.language",
+    "pk": 3,
+    "fields": {
+        "name": "Spanish",
+        "code": "es",
+        "created": "2021-10-13T18:47:15Z"
+    }
+},
+{
+    "model": "spanglish.quiz",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "category": 1,
+        "verb_tense": null,
+        "quiz_type": "'all'",
+        "exclude_daily": 1,
+        "created": "2021-10-24T15:04:34Z"
+    }
+},
+{
+    "model": "spanglish.quiz",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "category": null,
+        "verb_tense": null,
+        "quiz_type": "'word'",
+        "exclude_daily": null,
+        "created": "2021-10-24T15:04:34Z"
+    }
+},
+{
+    "model": "spanglish.quiz",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "category": 2,
+        "verb_tense": "present",
+        "quiz_type": "'word'",
+        "exclude_daily": 1,
+        "created": "2021-10-24T15:05:40Z"
+    }
+},
+{
+    "model": "spanglish.quiz",
+    "pk": 4,
+    "fields": {
+        "user": 1,
+        "category": 3,
+        "verb_tense": null,
+        "quiz_type": "'sentence'",
+        "exclude_daily": 0,
+        "created": "2021-10-24T20:20:48Z"
+    }
+},
+{
+    "model": "spanglish.quiz",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "category": 1,
+        "verb_tense": null,
+        "quiz_type": "'all'",
+        "exclude_daily": 2,
+        "created": "2021-10-24T20:20:48Z"
+    }
+},
+{
+    "model": "spanglish.sentence",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "sentence": "como estas ?",
+        "language": 3,
+        "category": 1,
+        "created": "2021-10-24T14:58:39Z"
+    }
+},
+{
+    "model": "spanglish.sentence",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "sentence": "A donde estas ?",
+        "language": 3,
+        "category": 1,
+        "created": "2021-10-24T14:58:39Z"
+    }
+},
+{
+    "model": "spanglish.translation",
+    "pk": 1,
+    "fields": {
+        "word": 1,
+        "sentence": null,
+        "language": 2,
+        "translation": "Go",
+        "created": "2021-10-24T14:59:36Z"
+    }
+},
+{
+    "model": "spanglish.translation",
+    "pk": 2,
+    "fields": {
+        "word": null,
+        "sentence": 2,
+        "language": 3,
+        "translation": "How are you ?",
+        "created": "2021-10-24T14:59:36Z"
+    }
+},
+{
+    "model": "spanglish.verb",
+    "pk": 1,
+    "fields": {
+        "tense": "simple present",
+        "word": 3,
+        "yo": "hablo",
+        "tu": "hablas",
+        "usted": "habla",
+        "nosotros": "hablamos",
+        "vosotros": "hablais",
+        "ustedes": "hablan",
+        "created": "2021-10-24T14:54:17Z"
+    }
+},
+{
+    "model": "spanglish.verb",
+    "pk": 2,
+    "fields": {
+        "tense": "simple present",
+        "word": 4,
+        "yo": "voy",
+        "tu": "vas",
+        "usted": "va",
+        "nosotros": "vamos",
+        "vosotros": "vais",
+        "ustedes": "van",
+        "created": "2021-10-24T14:54:17Z"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "word": "Lunes",
+        "language": 3,
+        "category": 1,
+        "created": "2021-10-24T14:47:22Z"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "word": "Uno",
+        "language": 3,
+        "category": 2,
+        "created": "2021-10-24T14:47:22Z"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "word": "Hablar",
+        "language": 3,
+        "category": 2,
+        "created": "2021-10-24T14:52:51Z"
+    }
+},
+{
+    "model": "spanglish.word",
+    "pk": 4,
+    "fields": {
+        "user": 1,
+        "word": "Ir",
+        "language": 3,
+        "category": 2,
+        "created": "2021-10-24T14:52:51Z"
+    }
+}
+]

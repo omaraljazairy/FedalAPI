@@ -17,25 +17,183 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL', 10)
 logger = logging.getLogger('spanglish')
 
 
-class CategoryViews(viewsets.ModelViewSet):
-    """uses the ModelViewSet as there is nothing special about
-    the views of the category. all standard CRUD operations."""
+class CategoryCreateListView(views.APIView):
+    """use for the post, get all requests only."""
 
-    throttle_classes = (SpanglishRateThrottle, )
-    throttle_scope = 'spanglish'
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    name = 'category-list'
+    def post(self, request):
+        """create a catgory object and return an http 200 response. 
+        If an integrity exception is returned, it will return it with a 
+        customer json response."""
 
-class LanguageViews(viewsets.ModelViewSet):
-    """uses the ModelViewSet as there is nothing special about
-    the views of the language. all standard CRUD operations."""
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                serializer.save()
+                message = {'SUCCESS': 'Category created successfully'}
+                return Response(data=message, status=status.HTTP_201_CREATED)
 
-    throttle_classes = (SpanglishRateThrottle, )
-    throttle_scope = 'spanglish'
-    queryset = Language.objects.all()
-    serializer_class = LanguageSerializer
-    name = 'language-list'
+            except  IntegrityError as e:
+                serializer.error_messages = {
+                    'INTEGRITY_ERROR': str(e)
+                }
+                return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+            except Exception as e:
+                serializer.error_messages = {
+                    'ERROR': str(e)
+                }
+                return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+            
+
+    def get(self, request):
+        """returns a list of category objects."""
+
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class CategoryUpdateDeleteDetails(views.APIView):
+    """expects a pk in the request. Used for get single category, patch and delete. """
+
+    def get(self, request, pk):
+        """get a single category by providing the pk."""
+    
+        category = Category.objects.get(pk=pk)
+        serializer = CategorySerializer(category)
+        
+        return Response(serializer.data)
+
+
+    def patch(self, request, pk):
+        """update a category object. """
+
+        category = Category.objects.get(pk=pk)
+        serializer = CategorySerializer(category, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response(serializer.data)
+            except Exception as e:
+                serializer.error_messages = {
+                    'ERROR': str(e)
+                }
+                return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, pk):
+        """delete a category object by providing the pk"""
+
+        try:
+            category = Category.objects.get(pk=pk)
+            category.delete()
+            message = {'SUCCESS': 'Category has been deleted successfully'}
+            return Response(data=message, status=status.HTTP_204_NO_CONTENT)
+
+        except  IntegrityError as e:
+            error_messages = {
+                'INTEGRITY_ERROR': 'Can not delete category'
+            }
+            return Response(error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            error_messages = {
+                'ERROR': str(e)
+            }
+            return Response(error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class LanguageCreateListView(views.APIView):
+    """use for the post, get all requests only."""
+
+    def post(self, request):
+        """create a language object and return an http 200 response. 
+        If an integrity exception is returned, it will return it with a 
+        customer json response."""
+
+        serializer = LanguageSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            try:
+                serializer.save()
+                message = {'SUCCESS': 'Language created successfully'}
+                return Response(data=message, status=status.HTTP_201_CREATED)
+
+            except  IntegrityError as e:
+                serializer.error_messages = {
+                    'INTEGRITY_ERROR': str(e)
+                }
+                return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+            except Exception as e:
+                serializer.error_messages = {
+                    'ERROR': str(e)
+                }
+                return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+            
+
+    def get(self, request):
+        """returns a list of language objects."""
+
+        queryset = Language.objects.all()
+        serializer = LanguageSerializer(queryset, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class LanguageUpdateDeleteDetails(views.APIView):
+    """expects a pk in the request. Used for get single language, patch and delete. """
+
+    def get(self, request, pk):
+        """get a single language by providing the pk."""
+    
+        language = Language.objects.get(pk=pk)
+        serializer = LanguageSerializer(language)
+        
+        return Response(serializer.data)
+
+
+    def patch(self, request, pk):
+        """update a language object. """
+
+        language = Language.objects.get(pk=pk)
+        serializer = LanguageSerializer(language, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response(serializer.data)
+            except Exception as e:
+                serializer.error_messages = {
+                    'ERROR': str(e)
+                }
+                return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, pk):
+        """delete a language object by providing the pk"""
+
+        try:
+            language = Language.objects.get(pk=pk)
+            language.delete()
+            message = {'SUCCESS': 'Language has been deleted successfully'}
+            return Response(data=message, status=status.HTTP_204_NO_CONTENT)
+
+        except  IntegrityError as e:
+            error_messages = {
+                'INTEGRITY_ERROR': 'Can not delete language'
+            }
+            return Response(error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            error_messages = {
+                'ERROR': str(e)
+            }
+            return Response(error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class WordCreateListView(views.APIView):
     """use for the post, get all requests only."""
@@ -321,9 +479,17 @@ class TranslationUpdateDeleteDetails(views.APIView):
     def delete(self, request, pk):
         """delete a translation object by providing the pk"""
 
-        translation = Translation.objects.get(pk=pk)
-        translation.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            translation = Translation.objects.get(pk=pk)
+            translation.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except Exception as e:
+            error_messages = {
+                'ERROR': str(e)
+            }
+            return Response(error_messages, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # class ApiRoot(generics.GenericAPIView):

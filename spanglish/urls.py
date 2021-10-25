@@ -8,11 +8,15 @@ from rest_framework import routers
 # request doesn't include it. 
 router = routers.DefaultRouter(trailing_slash=False)
 
-router.register(r'category/?', views.CategoryViews)
-router.register(r'language/?', views.LanguageViews)
+# router.register(r'category/?', views.CategoryViews)
+# router.register(r'language/?', views.LanguageViews)
 # router.register(r'word', views.WordCreateUpdateView)
 
 urlpatterns = [
+    path('categories/', views.CategoryCreateListView.as_view(), name='category-create-list'),
+    path('category/<int:pk>/', views.CategoryUpdateDeleteDetails.as_view(), name='category-details'),
+    path('languages/', views.LanguageCreateListView.as_view(), name='language-create-list'),
+    path('language/<int:pk>/', views.LanguageUpdateDeleteDetails.as_view(), name='language-details'),
     path('words/', views.WordCreateListView.as_view(), name='word-create-list'),
     path('word/<int:pk>/', views.WordUpdateDeleteDetails.as_view(), name='word-details'),
     path('verbs/', views.VerbCreateListView.as_view(), name='verb-create-list'),

@@ -29,7 +29,7 @@ class WordSerializerTestClass(TestCase):
         word_data = word_serialized.data
         
         word_keys = list(word_data.keys())
-        expected_fields = ['id', 'word', 'language', 'category', 'created']
+        expected_fields = ['id', 'word', 'language', 'category', 'created', 'user']
 
         logger.debug("word_keys: %s", word_keys)
 

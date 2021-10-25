@@ -1,20 +1,19 @@
 import logging
 from rest_framework import serializers
-from rest_framework import validators
-from rest_framework.validators import UniqueTogetherValidator
 from .models import Category, Language, Word, Sentence, Translation, Verb
 
 logger = logging.getLogger('spanglish')
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     """Serialize the Catgory model object."""
 
     class Meta:
         """specify which fields should be serialized. in this case, all. """
 
         model = Category
-        fields = ('id', 'url', 'name', 'created')
+        fields = '__all__' 
+        # ('id', 'url', 'name', 'created')
 
 
 class LanguageSerializer(serializers.ModelSerializer):

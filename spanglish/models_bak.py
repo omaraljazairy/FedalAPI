@@ -6,8 +6,9 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from django.contrib.auth.models import User
 
+
+APP_LABEL = 'spanglish'
 
 class Category(models.Model):
     name = models.CharField(unique=True, max_length=20)
@@ -16,59 +17,53 @@ class Category(models.Model):
     class Meta:
         managed = False
         db_table = 'Category'
+        app_label = APP_LABEL
 
 
 class Language(models.Model):
     name = models.CharField(unique=True, max_length=20)
-    code = models.CharField(unique=True, max_length=2)
+    code = models.CharField(db_column='code', unique=True, null=True, max_length=2)  # Field renamed to remove unsuitable characters.
     created = models.DateTimeField(auto_now=True)
 
     class Meta:
         managed = False
         db_table = 'Language'
-
-
-class Quiz(models.Model):
-    user = models.ForeignKey(User, models.DO_NOTHING)
-    category = models.ForeignKey(Category, models.DO_NOTHING, blank=True, null=True)
-    verb_tense = models.TextField(blank=True, null=True)
-    quiz_type = models.CharField(max_length=10, blank=True, null=True)
-    exclude_daily = models.IntegerField(blank=True, null=True)
-    created = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        managed = False
-        db_table = 'Quiz'
+        app_label = APP_LABEL
 
 
 class Sentence(models.Model):
-    user = models.ForeignKey(User, models.DO_NOTHING)
     sentence = models.CharField(unique=True, max_length=255)
-    language = models.ForeignKey(Language, models.DO_NOTHING)
-    category = models.ForeignKey(Category, models.DO_NOTHING)
+    language = models.IntegerField(db_column='language_id',
+                                     blank=False, null=False)
+    category = models.IntegerField(db_column='category_id',
+                                     blank=False, null=False)
     created = models.DateTimeField(auto_now=True)
 
     class Meta:
         managed = False
         db_table = 'Sentence'
+        app_label = APP_LABEL
 
 
 class Translation(models.Model):
-    word = models.ForeignKey('Word', models.DO_NOTHING, blank=True, null=True)
-    sentence = models.ForeignKey(Sentence, models.DO_NOTHING, blank=True, null=True)
-    language = models.ForeignKey(Language, models.DO_NOTHING)
+    word = models.IntegerField(db_column='word_id',
+                                     blank=True, null=True)
+    sentence = models.IntegerField(db_column='sentence_id',
+                                     blank=True, null=True)
+    language = models.IntegerField(db_column='language_id',
+                                     blank=False, null=False)
     translation = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now=True)
 
     class Meta:
         managed = False
         db_table = 'Translation'
-        unique_together = (('sentence', 'translation'), ('word', 'translation'),)
-
+        app_label = APP_LABEL
 
 class Verb(models.Model):
     tense = models.CharField(max_length=19)
-    word = models.ForeignKey('Word', models.DO_NOTHING)
+    word = models.IntegerField(db_column='word_id',
+                                     blank=False, null=False)
     yo = models.CharField(max_length=25, blank=True, null=True)
     tu = models.CharField(max_length=25, blank=True, null=True)
     usted = models.CharField(max_length=25, blank=True, null=True)
@@ -81,16 +76,18 @@ class Verb(models.Model):
         managed = False
         db_table = 'Verb'
         unique_together = (('tense', 'word'),)
-
+        app_label = APP_LABEL
 
 class Word(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    user = models.ForeignKey(User, models.DO_NOTHING)
     word = models.CharField(unique=True, max_length=30)
-    language = models.ForeignKey(Language, models.DO_NOTHING)
-    category = models.ForeignKey(Category, models.DO_NOTHING)
-    created = models.DateTimeField(auto_now=True)
+    language = models.IntegerField(db_column='language_id',
+                                     blank=False, null=False)
+    category = models.IntegerField(db_column='category_id',
+                                     blank=False, null=False)
+    created = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'Word'
+        app_label = APP_LABEL
