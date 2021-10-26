@@ -1,15 +1,4 @@
 # Fedal API
-### Table of Contents
-#### [Description](#description)
-#### [Built with](#built-with)
-#### [Install](#install)
-#### [Usage](#usage)
-#### [Changelog](#changelog)
-#### [Bugs](#bugs)
-#### [Contributing](#contributing)
-#### [Authors](#authors)
-#### [License](#license)
-
 ## Description
 A Django Backend API used for my own projects. The API will used for front-end websites, mobile apps and command line applications. The API runs inside a docker container. For local testing, it uses a MySQL image connected to it. There is a PHPMyAdmin connected to the MySQL database.
 
