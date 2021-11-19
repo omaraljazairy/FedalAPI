@@ -91,7 +91,7 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': LEVEL,
+            'level': 'DEBUG', #LEVEL,
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join( os.environ.get('LOG_DIR', 'logs') ,'api.log'),
             'formatter': 'standard',
@@ -123,7 +123,7 @@ LOGGING = {
         },
         'spanglish': {
             'handlers': ['file'],
-            'level': LEVEL,
+            'level': 'DEBUG',
             'propagate': True,
         },
         'throttles': {

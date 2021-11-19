@@ -146,9 +146,20 @@ class SentenceViewTestClass(TestCase):
             'id': 1, 
             'user': 1,
             'sentence': 'Como estas ?', 
-            'language': 2, 
-            'category': 2, 
-            'created': '2021-09-28 13:35:51+0200'
+            'language': 'Spanish', 
+            'category': 'greeting', 
+            'created': '2021-09-28 13:35:51+0200',
+            'translations': [
+                {
+                    'id': 2, 
+                    'languagename': 'English', 
+                    'translation': 'How are you', 
+                    'created': '2021-09-28 13:35:51+0200', 
+                    'word': None, 
+                    'sentence': 1, 
+                    'language': 1
+                }
+            ]
         }
 
         self.assertEquals(status_code, 200)

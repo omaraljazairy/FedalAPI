@@ -145,6 +145,7 @@ class TranslationViewTestClass(TestCase):
         expected_content = {
             "id": 1,
             "language": 1,
+            "languagename": "English",
             "word": 1,
             "sentence": None,
             "created": "2021-09-28 13:35:51+0200",

@@ -1,9 +1,8 @@
 """Main View classes for the Spanglish app."""
 from django.db import IntegrityError
-from django.utils import translation
 from spanglish.models import Category, Language, Word, Sentence, Verb, Translation
-from spanglish.serializers import CategorySerializer, LanguageSerializer, SentenceSerializer, WordSerializer, VerbSerializer, TranslationSerializer
-from rest_framework import status, views, viewsets
+from spanglish.serializers import CategorySerializer, LanguageSerializer, SentenceSerializer, SentenceDetailsSerializer, WordSerializer, WordDetailsSerializer, VerbSerializer, TranslationSerializer
+from rest_framework import status, views, generics
 from rest_framework.response import Response
 # from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 # from fedalapi.permissions import IsOwner
@@ -208,13 +207,12 @@ class WordCreateListView(views.APIView):
 
         if serializer.is_valid(raise_exception=True):
             try:
-
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
 
             except  IntegrityError as e:
                 serializer.error_messages = {
-                    'INTEGRITY_ERROR': 'INVALID LanguageId or CategoryId'
+                    'INTEGRITY_ERROR': f'{e}'
                 }
                 return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
@@ -241,7 +239,7 @@ class WordUpdateDeleteDetails(views.APIView):
         """get a single word by providing the pk."""
     
         word = Word.objects.get(pk=pk)
-        serializer = WordSerializer(word)
+        serializer = WordDetailsSerializer(word)
         return Response(serializer.data)
 
 
@@ -265,23 +263,28 @@ class WordUpdateDeleteDetails(views.APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class VerbCreateListView(views.APIView):
+class VerbCreateListView(generics.ListCreateAPIView):
     """use for the post, get all requests only."""
 
+    logger.debug(f"LOGGING")
     def post(self, request):
         """create a verb object and return an http 200 response. 
         If an integrity exception is returned, it will return it with a 
         customer json response."""
 
         serializer = VerbSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        
+        valid = serializer.is_valid(raise_exception=True)
+        logger.info(f"valid received {valid}")
+        logger.debug(f"valid errors {serializer.errors}")
+        if valid:
             try:
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
 
             except  IntegrityError as e:
                 serializer.error_messages = {
-                    'INTEGRITY_ERROR': 'INVALID Tense or WordId'
+                    'INTEGRITY_ERROR': f'INVALID Tense or WordId: {e}'
                 }
                 return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
 
@@ -290,6 +293,9 @@ class VerbCreateListView(views.APIView):
                     'ERROR': str(e)
                 }
                 return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            msg = {'ERROR': f'{serializer.errors}'}
+            return Response(msg, status=status.HTTP_409_CONFLICT)
             
 
     def get(self, request):
@@ -381,7 +387,7 @@ class SentenceUpdateDeleteDetails(views.APIView):
         """get a single sentence by providing the pk."""
     
         sentence = Sentence.objects.get(pk=pk)
-        serializer = SentenceSerializer(sentence)
+        serializer = SentenceDetailsSerializer(sentence)
         
         return Response(serializer.data)
 

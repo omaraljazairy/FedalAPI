@@ -71,9 +71,12 @@ services:
      - '6379:6379'
     volumes:
      - $PWD/redis-data:/var/lib/redis
-      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+     - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
     environment:
      - REDIS_REPLICATION_MODE=master
+    networks:
+      network-django:
+        ipv4_address: ${REDIS_HOST}
 volumes: 
     mysql-data:
     staticfiles:

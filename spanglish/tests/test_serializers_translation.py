@@ -29,7 +29,7 @@ class TranslationSerializerTestClass(TestCase):
         translation_data = translation_serialized.data
         
         translation_keys = list(translation_data.keys())
-        expected_fields = ['id', 'word', 'sentence', 'language', 'translation', 'created']
+        expected_fields = ['id', 'word', 'sentence', 'language', 'languagename', 'translation', 'created']
 
         logger.debug("translation_keys: %s", translation_keys)
 

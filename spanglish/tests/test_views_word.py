@@ -129,10 +129,10 @@ class WordViewTestClass(TestCase):
         self.assertEquals(status_code, 404)
 
 
-    def test_view_get_word_with_content(self):
+    def test_view_get_word_details_with_content_verb(self):
         """test the get request to the api to get word id 1.
-        expects 200 response with content json value to match
-        the name Verb."""
+        expects 200 response with content json value that containes 
+        languagename, categoryname, verb, translation and user."""
 
         # set the url for the api with param
         uri = f'{self.api_url}1/'
@@ -143,12 +143,37 @@ class WordViewTestClass(TestCase):
         logger.debug("response content: %s" % content)
 
         expected_content = {
-            'id': 1,
-            'user': 1, 
+            'id': 1, 
             'word': 'Hablar', 
-            'language': 2, 
-            'category': 1, 
-            'created': '2021-09-28 13:35:51+0200'
+            'created': '2021-09-28 13:35:51+0200', 
+            'user': 1, 
+            'language': 'Spanish', 
+            'translations': [
+                {
+                    'id': 1, 
+                    'languagename': 'English', 
+                    'translation': 'Speak', 
+                    'created': '2021-09-28 13:35:51+0200', 
+                    'word': 1, 
+                    'sentence': None, 
+                    'language': 1
+                }
+            ], 
+            'category': 'verb', 
+            'verb': [
+                {
+                    'id': 1, 
+                    'tense': 'present', 
+                    'yo': 'hablo', 
+                    'tu': 'hablas', 
+                    'usted': 'habla', 
+                    'nosotros': 'hablamos', 
+                    'vosotros': 'hablais', 
+                    'ustedes': 'hablan', 
+                    'created': '2020-09-28 18:09:05+0200', 
+                    'word': 1
+                }
+            ]
         }
 
         self.assertEquals(status_code, 200)

@@ -54,8 +54,20 @@ class Sentence(models.Model):
 
 
 class Translation(models.Model):
-    word = models.ForeignKey('Word', models.DO_NOTHING, blank=True, null=True)
-    sentence = models.ForeignKey(Sentence, models.DO_NOTHING, blank=True, null=True)
+    word = models.ForeignKey(
+        'Word', 
+        models.DO_NOTHING,
+        related_name='translations',
+        blank=True, 
+        null=True
+    )
+    sentence = models.ForeignKey(
+        Sentence, 
+        models.DO_NOTHING, 
+        related_name='translations',
+        blank=True, 
+        null=True
+    )
     language = models.ForeignKey(Language, models.DO_NOTHING)
     translation = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now=True)
@@ -68,7 +80,12 @@ class Translation(models.Model):
 
 class Verb(models.Model):
     tense = models.CharField(max_length=19)
-    word = models.ForeignKey('Word', models.DO_NOTHING)
+    word = models.ForeignKey(
+        'Word', 
+        models.DO_NOTHING,
+        related_name='verb',
+        # related_query_name='verbword'
+    )
     yo = models.CharField(max_length=25, blank=True, null=True)
     tu = models.CharField(max_length=25, blank=True, null=True)
     usted = models.CharField(max_length=25, blank=True, null=True)
@@ -82,6 +99,10 @@ class Verb(models.Model):
         db_table = 'Verb'
         unique_together = (('tense', 'word'),)
 
+    def __str__(self) -> str:
+        return f"{self.id}: yo {self.yo} - tu {self.tu} - usted {self.usted} \
+ - nosotros {self.nosotros} - vosotros {self.vosotros} - ustedes {self.ustedes}"
+
 
 class Word(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
@@ -94,3 +115,6 @@ class Word(models.Model):
     class Meta:
         managed = False
         db_table = 'Word'
+
+    def __str__(self) -> str:
+        return f"{self.word} - {self.language.name} - {self.category.name}"

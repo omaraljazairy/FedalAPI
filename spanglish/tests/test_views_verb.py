@@ -143,18 +143,18 @@ class VerbViewTestClass(TestCase):
         logger.debug("response content: %s" % content)
 
         expected_content = {
-            "id": 1,
-            "word": 1,
-            "yo": "hablo",
-            "tu": "hablas",
-            "usted": "habla",
-            "nosotros": "hablamos",
-            "vosotros": "hablais",
-            "ustedes": "hablan",
-            "tense": "present",
-            "created": "2020-09-28 18:09:05+0200"
+            'id': 1, 
+            'word': 1, 
+            'tense': 'present', 
+            'yo': 'hablo', 
+            'tu': 'hablas', 
+            'usted': 'habla', 
+            'nosotros': 'hablamos', 
+            'vosotros': 'hablais', 
+            'ustedes': 'hablan', 
+            'created': '2020-09-28 18:09:05+0200'
         }
-
+        
         self.assertEquals(status_code, 200)
         self.assertDictEqual(d1=content, d2=expected_content)
 
@@ -172,6 +172,7 @@ class VerbViewTestClass(TestCase):
             "ustedes": "van",
             "tense": "present",
         }
+
         response = self.api_client.post(self.api_url2, data=data)
         status_code = response.status_code
         content = response.content
