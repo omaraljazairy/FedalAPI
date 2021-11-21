@@ -16,7 +16,7 @@ RUN mkdir /fedalapi/static
 WORKDIR /fedalapi
 
 # execute the pip install upgrade first
-RUN pip install --upgrade pip
+#RUN pip install --upgrade pip
 
 # copy requirements.txt to the current working directory
 COPY ./requirements.txt .

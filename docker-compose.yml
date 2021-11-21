@@ -22,7 +22,7 @@ services:
       - ./.env
     # command: tail -f /dev/null
     networks:
-      - network-django
+      - network-fedalapi
     depends_on:
       - mysql
   # nginx: # FOR PRODUCTION
@@ -35,9 +35,9 @@ services:
   #   depends_on:
   #     - web
   #   networks:
-  #     - network-django
+  #     - network-fedalapi
   mysql:
-    container_name: mysql-django
+    container_name: fedalapi-mysql
     image: mysql:latest
     ports:
       - '3310:3306'
@@ -48,14 +48,14 @@ services:
         source: mysql-data
         target: /var/lib/mysql
     networks:
-      network-django:
+      network-fedalapi:
         ipv4_address: ${DB_HOST}
   phpmyadmin:
-    container_name: phpmyadmin-django
+    container_name: fedalapi-phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     networks:
-      - network-django
+      - network-fedalapi
     environment:
       - PMA_HOST=mysql
       - PMA_USER=${DB_USER}
@@ -65,6 +65,7 @@ services:
     depends_on:
       - mysql
   redis:
+    container_name: fedalapi-redis
     image: "redis:alpine"
     command: redis-server --requirepass ${REDIS_PASS}
     ports:
@@ -75,13 +76,13 @@ services:
     environment:
      - REDIS_REPLICATION_MODE=master
     networks:
-      network-django:
+      network-fedalapi:
         ipv4_address: ${REDIS_HOST}
 volumes: 
     mysql-data:
     staticfiles:
 networks:
-    network-django:
+    network-fedalapi:
       ipam:
         driver: default
         config:
